@@ -1,5 +1,11 @@
 'use strict';
 
+// const dotenv = require('dotenv');
+// dotenv.config();
+
+
+
+
 let mongo = {
   // Setting the connection string will only give access to that database
   // to see more databases you need to set mongodb.admin to true or add databases to the mongodb.auth list
@@ -7,12 +13,21 @@ let mongo = {
 };
 
 // Accesing Bluemix variable to get MongoDB info
+console.log('VCAP_SERVICES='+process.env.VCAP_SERVICES);
 if (process.env.VCAP_SERVICES) {
-  const dbLabel = 'mongodb-2.4';
+  const dbLabel = 'mlab';
   const env = JSON.parse(process.env.VCAP_SERVICES);
+
   if (env[dbLabel]) {
-    mongo = env[dbLabel][0].credentials;
+
+    mongo.connectionString = env[dbLabel][0].credentials.uri;
+    mongo.username="admin";
+    mongo.password="password1"
+
   }
+
+
+
 }
 
 const basicAuthUsername = 'ME_CONFIG_BASICAUTH_USERNAME';
@@ -145,8 +160,8 @@ module.exports = {
   useBasicAuth: getFileEnv(basicAuthUsername) !== '',
 
   basicAuth: {
-    username: getFileEnv(basicAuthUsername) || 'admin',
-    password: getFileEnv(basicAuthPassword) || 'pass',
+    username: getFileEnv(basicAuthUsername) || 'root',
+    password: getFileEnv(basicAuthPassword) || 'example',
   },
 
   options: {
@@ -216,3 +231,4 @@ module.exports = {
 
   },
 };
+

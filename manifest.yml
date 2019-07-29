@@ -4,10 +4,11 @@ declared-services:
     label: mongodb
     plan: 100
 applications:
-- name: mongo-express
-  host: mongo-express
+- name: mongo-express2
+  host: mongo-express2
   memory: 128M
+  buildpack: nodejs_buildpack_v1_6_32
   services:
-    - db-mongo
+    - rti_eqp_activity_service_mongo_db
   env:
     NODE_ENV: cloud-foundry
