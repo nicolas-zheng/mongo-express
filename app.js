@@ -80,7 +80,7 @@ if (commander.username && commander.password) {
 
   config.useBasicAuth = false;
 }
-
+console.log(""+config.mongodb.admin+" "+config.mongodb.admin);
 if (commander.url) {
   config.mongodb.connectionString = commander.url;
   if (commander.admin) {

@@ -15,14 +15,14 @@ let mongo = {
 // Accesing Bluemix variable to get MongoDB info
 console.log('VCAP_SERVICES='+process.env.VCAP_SERVICES);
 if (process.env.VCAP_SERVICES) {
-  const dbLabel = 'mlab';
+  const dbLabel = 'cloud_sandbox_mongodb';
   const env = JSON.parse(process.env.VCAP_SERVICES);
 
   if (env[dbLabel]) {
 
-    mongo.connectionString = env[dbLabel][0].credentials.uri;
-    mongo.username="admin";
-    mongo.password="password1"
+    mongo.connectionString = env[dbLabel][0].credentials.operation_uri;
+    // mongo.username="admin";
+    // mongo.password="Password1"
 
   }
 
@@ -109,9 +109,7 @@ module.exports = {
     // set admin to true if you want to turn on admin features
     // if admin is true, the auth list below will be ignored
     // if admin is true, you will need to enter an admin username/password below (if it is needed)
-    admin: process.env.ME_CONFIG_MONGODB_ENABLE_ADMIN ?
-      process.env.ME_CONFIG_MONGODB_ENABLE_ADMIN.toLowerCase() === 'true' :
-      false,
+    admin: false,
 
     // >>>> If you are using regular accounts, fill out auth details in the section below
     // >>>> If you have admin auth, leave this section empty and skip to the next section
@@ -122,8 +120,8 @@ module.exports = {
        */
       {
         database: process.env.ME_CONFIG_MONGODB_AUTH_DATABASE || mongo.db,
-        username: getFileEnv(dbAuthUsername) || mongo.username,
-        password: getFileEnv(dbAuthPassword) || mongo.password,
+        username: "admin",
+        password: "Password1",
       },
     ],
 
@@ -160,8 +158,8 @@ module.exports = {
   useBasicAuth: getFileEnv(basicAuthUsername) !== '',
 
   basicAuth: {
-    username: getFileEnv(basicAuthUsername) || 'root',
-    password: getFileEnv(basicAuthPassword) || 'example',
+    username: getFileEnv(basicAuthUsername) || 'admin',
+    password: getFileEnv(basicAuthPassword) || 'pass',
   },
 
   options: {
